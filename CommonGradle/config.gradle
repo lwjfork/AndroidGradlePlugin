@@ -1,8 +1,6 @@
 ext {
-
     dependenciesRep = [
             androidGradle: "com.android.tools.build:gradle:3.4.2",
-            groovy:'org.codehaus.groovy:groovy-all:2.3.11'
+            groovy:'org.codehaus.groovy:groovy-all:2.5.8'
     ]
-
 }

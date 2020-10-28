@@ -1,0 +1,31 @@
+apply plugin: 'maven'
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    if (project.plugins.hasPlugin("groovy")) {
+        from sourceSets.main.groovy.srcDirs
+    }
+    if (project.plugins.hasPlugin("java")) {
+        from sourceSets.main.java.srcDirs
+    }
+}
+artifacts {
+    archives sourcesJar
+}
+uploadArchives {
+    configuration = configurations.archives
+    repositories {
+        mavenDeployer {
+            repository(url: 'file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath) {
+            }
+
+            pom.project {
+                version publishVersion
+                artifactId artifactId
+                groupId groupId
+                packaging packaging
+                description publishDescription
+            }
+        }
+
+    }
+}

@@ -18,3 +18,12 @@ dependencies {
     implementation rootProject.dependenciesRep.androidGradle
     implementation rootProject.dependenciesRep.groovy
 }
+
+ext {
+    publishVersion = "1.0.0-SNAPSHOT"
+    artifactId =  "common"
+    groupId=  'com.lwjfork.gradle'
+    packaging = 'jar'
+    publishDescription='update snapshots'
+}
+apply from:'publishMaven.gradle'
