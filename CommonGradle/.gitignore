@@ -1,3 +1,5 @@
 .gradle
 .idea
 gradle
+!src/main/groovy/com/lwjfork/gradle
+
