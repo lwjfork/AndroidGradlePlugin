@@ -1,0 +1,6 @@
+rootProject.name = 'AndroidGradlePlugin'
+include 'UpdateManifest'
+include 'CommonGradle'
+
+
+

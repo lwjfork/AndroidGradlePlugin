@@ -1,0 +1,17 @@
+
+plugins {
+    id 'java'
+}
+group 'com.lwjfork.gradle'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    google()
+    jcenter()
+}
+apply from:'config.gradle'
+dependencies {
+
+}
+
