@@ -10,9 +10,6 @@ buildscript {
     }
 }
 apply plugin:'groovy'
-if (project.hasProperty("kotlin")) {
-    apply plugin: 'org.jetbrains.dokka-android'
-}
 
 group 'com.lwjfork.gradle'
 version '1.0-SNAPSHOT'
