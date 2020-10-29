@@ -1,6 +1,31 @@
 ext {
     dependenciesRep = [
-            androidGradle: "com.android.tools.build:gradle:3.4.2",
+             //=========== 3.4.x ==============
+//            androidGradle: "com.android.tools.build:gradle:3.4.0",
+//            androidGradle: "com.android.tools.build:gradle:3.4.1",
+//            androidGradle: "com.android.tools.build:gradle:3.4.2",
+//            androidGradle: "com.android.tools.build:gradle:3.4.3",
+             //=========== 3.5.x ==============
+//            androidGradle: "com.android.tools.build:gradle:3.5.0",
+//            androidGradle: "com.android.tools.build:gradle:3.5.1",
+//            androidGradle: "com.android.tools.build:gradle:3.5.2",
+//            androidGradle: "com.android.tools.build:gradle:3.5.3",
+//            androidGradle: "com.android.tools.build:gradle:3.5.4",
+             //=========== 3.6.x ==============
+            androidGradle: "com.android.tools.build:gradle:3.6.0",
+//            androidGradle: "com.android.tools.build:gradle:3.6.1",
+//            androidGradle: "com.android.tools.build:gradle:3.6.2",
+//            androidGradle: "com.android.tools.build:gradle:3.6.3",
+//            androidGradle: "com.android.tools.build:gradle:3.6.4",
+
+             //=========== 4.0.x ==============
+//            androidGradle: "com.android.tools.build:gradle:4.0.0",
+//            androidGradle: "com.android.tools.build:gradle:4.0.1",
+//            androidGradle: "com.android.tools.build:gradle:4.0.2",
+
+             //=========== 4.1.0 ==============
+//            androidGradle: "com.android.tools.build:gradle:4.1.0",
+
             groovy:'org.codehaus.groovy:groovy-all:2.5.8',
             commonGradle: 'com.lwjfork.gradle:common:1.0.0-SNAPSHOT'
     ]
