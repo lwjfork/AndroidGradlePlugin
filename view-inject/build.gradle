@@ -1,0 +1,41 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
+    }
+}
+apply plugin:'groovy'
+
+group 'com.lwjfork.gradle'
+version '1.0-SNAPSHOT'
+apply from: '../config.gradle'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    google()
+    jcenter()
+}
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation rootProject.dependenciesRep.androidGradle
+    implementation rootProject.dependenciesRep.groovy
+    implementation rootProject.dependenciesRep.androidGradleAdapter
+    implementation rootProject.dependenciesRep.androidGradleUtils
+}
+
+rootProject.ext.PROJ_VERSION = "0.0.1"
+rootProject.ext.PROJ_ARTIFACTID = "view-inject"
+rootProject.ext.PROJ_NAME = "view-inject"
+rootProject.ext.PROJ_PACKAGING = 'jar'
+rootProject.ext.PROJ_DESCRIPTION = 'Android Gradle Plugin InjectView'
+apply from: "../bintray.gradle"
+//apply from: '../publishLocal.gradle'

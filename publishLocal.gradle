@@ -19,11 +19,11 @@ uploadArchives {
             }
 
             pom.project {
-                version publishVersion
-                artifactId artifactId
-                groupId groupId
-                packaging packaging
-                description publishDescription
+                version rootProject.ext.PROJ_VERSION
+                artifactId rootProject.ext.PROJ_ARTIFACTID
+                groupId rootProject.ext.PROJ_GROUP
+                packaging rootProject.ext.PROJ_PACKAGING
+                description rootProject.ext.PROJ_DESCRIPTION
             }
         }
 

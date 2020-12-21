@@ -26,7 +26,14 @@ ext {
              //=========== 4.1.0 ==============
 //            androidGradle: "com.android.tools.build:gradle:4.1.0",
 
-            groovy:'org.codehaus.groovy:groovy-all:2.5.8',
-            commonGradle: 'com.lwjfork.gradle:common:1.0.0-SNAPSHOT'
+             groovy:'org.codehaus.groovy:groovy-all:2.5.8',
+             androidGradleAdapter:'com.lwjfork.gradle:android-gradle-adapter:0.0.1',
+             androidGradleUtils:'com.lwjfork.gradle:android-gradle-utils:0.0.1',
+             commonAOP:'com.lwjfork.gradle:common-aop:0.0.1',
+             dependencyConfig :'com.lwjfork.gradle:dependency-config:0.0.1',
+             viewInject :'com.lwjfork.gradle:view-inject:0.0.1',
+             manifestUpdate :'com.lwjfork.gradle:manifest-update:0.0.1',
+             moduleConfig :'com.lwjfork.gradle:module-config:0.0.1',
+             runnableConfig:'com.lwjfork.gradle:runnable-config:0.0.1'
     ]
 }
