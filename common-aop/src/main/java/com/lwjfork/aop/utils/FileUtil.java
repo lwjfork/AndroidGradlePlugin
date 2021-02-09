@@ -56,9 +56,9 @@ public class FileUtil {
     @SuppressWarnings("unused")
     public static void copyZipFile(String sourcePath, String destPath, String ignorePattern, CopyOption... options) throws IOException {
         copyFile(sourcePath,destPath,options);
-      if(ignorePattern != null && ignorePattern.length() > 0){
-          deleteFileFromZip(destPath,ignorePattern);
-      }
+        if(ignorePattern != null && ignorePattern.length() > 0){
+            deleteFileFromZip(destPath,ignorePattern);
+        }
     }
     /**
      * 移动zip文件
@@ -162,6 +162,7 @@ public class FileUtil {
         Path dest = target.resolve(source.getFileName());
         // 如果相同则返回
         if (Files.exists(dest) && Files.isSameFile(source, dest)) {
+
             return;
         }
         boolean clear = true;
@@ -200,7 +201,7 @@ public class FileUtil {
      * @throws IOException 异常IO
      */
     public static void deleteIfExists(String path) throws IOException {
-       deleteIfExists(Paths.get(path));
+        deleteIfExists(Paths.get(path));
     }
 
 
@@ -296,12 +297,13 @@ public class FileUtil {
         } else {
             File[] files = file.listFiles();
             if (files == null || files.length == 0) {
-                String absolutePath = file.getAbsolutePath();
-                String realtivePath = absolutePath.substring(sourceDirectory.length() + 1);
-                if (!Pattern.matches(ignorePathPattern, realtivePath)) {
-                    zipOutputStream.putNextEntry(new ZipEntry(realtivePath + File.separator));
-                    zipOutputStream.closeEntry();
-                }
+                // 空文件，直接忽略掉吧
+//                String absolutePath = file.getAbsolutePath();
+//                String realtivePath = absolutePath.substring(sourceDirectory.length() + 1);
+//                if (!Pattern.matches(ignorePathPattern, realtivePath)) {
+//                    zipOutputStream.putNextEntry(new ZipEntry(realtivePath + File.separator));
+//                    zipOutputStream.closeEntry();
+//                }
 
             } else {
                 for (File file2 : files) {
