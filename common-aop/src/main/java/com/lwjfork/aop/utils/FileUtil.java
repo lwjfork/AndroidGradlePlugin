@@ -56,9 +56,9 @@ public class FileUtil {
     @SuppressWarnings("unused")
     public static void copyZipFile(String sourcePath, String destPath, String ignorePattern, CopyOption... options) throws IOException {
         copyFile(sourcePath,destPath,options);
-        if(ignorePattern != null && ignorePattern.length() > 0){
-            deleteFileFromZip(destPath,ignorePattern);
-        }
+      if(ignorePattern != null && ignorePattern.length() > 0){
+          deleteFileFromZip(destPath,ignorePattern);
+      }
     }
     /**
      * 移动zip文件
@@ -201,7 +201,7 @@ public class FileUtil {
      * @throws IOException 异常IO
      */
     public static void deleteIfExists(String path) throws IOException {
-        deleteIfExists(Paths.get(path));
+       deleteIfExists(Paths.get(path));
     }
 
 

@@ -36,14 +36,14 @@ ext {
     publishGroup = 'com.lwjfork.gradle'
 
     publishVersion = [
-            androidGradleAdapter:'0.0.3',
-            androidGradleUtils:'0.0.3',
-            commonAOP:'0.0.3',
-            dependencyConfig :'0.0.2',
-            viewInject :'0.0.2',
-            manifestUpdate :'0.0.2',
-            moduleConfig :'0.0.2',
-            runnableConfig:'0.0.2'
+            androidGradleAdapter:'0.0.4',
+            androidGradleUtils:'0.0.4',
+            commonAOP:'0.0.4',
+            dependencyConfig :'0.0.4',
+            viewInject :'0.0.3',
+            manifestUpdate :'0.0.3',
+            moduleConfig :'0.0.3',
+            runnableConfig:'0.0.3'
     ]
 
     publishArtifactid = [

@@ -16,4 +16,14 @@ public class PacketDirModel {
     public  boolean deleteSrc = true;
     public String ignorePattern;
 
+    @Override
+    public String toString() {
+        return "PacketDirModel{" +
+                "sourceDirPath='" + sourceDirPath + '\'' +
+                ", destDirPath='" + destDirPath + '\'' +
+                ", needCopy=" + needCopy +
+                ", deleteSrc=" + deleteSrc +
+                ", ignorePattern='" + ignorePattern + '\'' +
+                '}';
+    }
 }

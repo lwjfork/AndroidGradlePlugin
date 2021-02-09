@@ -31,26 +31,18 @@ public class ClassCollectorExecutor {
      * 添加收集的单独文件
      * @param sourcePath  文件路径
      */
-    public void addSingleFile(String sourcePath, boolean needScan){
-        singleFileModels.add(new CollectorSingleFileModel(sourcePath,needScan));
+    public void addSingleFile(String sourcePath, String destPath,boolean needScan){
+        singleFileModels.add(new CollectorSingleFileModel(sourcePath,destPath,needScan));
     }
     /**
      * 添加收集的单独文件
      * @param sourcePath  文件路径
      */
-    public void addSingleFile(String sourcePath){
-        this.addSingleFile(sourcePath,true);
+    public void addSingleFile(String sourcePath,String destPath){
+        this.addSingleFile(sourcePath,destPath,true);
     }
 
-    /**
-     * 需要收集的 目录
-     * @param sourcePath 目录源路径
-     * @param ignorePattern 忽略文件的正则
-     * @param needScan 是否需要遍历收集
-     */
-    public void addDirectory(String sourcePath, String ignorePattern, boolean needScan) {
-        this.dirModels.add(new CollectorDirModel(sourcePath,needScan,ignorePattern));
-    }
+
 
     /**
      * 收集的 jar 包，此jar包不需要解压的
@@ -65,30 +57,33 @@ public class ClassCollectorExecutor {
      * @param ignorePattern 忽略文件的正则
      * @param needScan 是否需要遍历收集
      */
-    public void addJar(String sourcePath, String unzipPath, String ignorePattern, boolean needScan) {
-        this.jarModels.add(new CollectorJarModel(sourcePath,unzipPath,ignorePattern,needScan));
+    public void addJar(String sourcePath, String unzipPath,String destPath, String ignorePattern, boolean needScan) {
+        this.jarModels.add(new CollectorJarModel(sourcePath,unzipPath,destPath,ignorePattern,needScan));
     }
 
-    public void addJar(String sourcePath, String unzipPath,  boolean needScan) {
-        this.addJar(sourcePath, unzipPath, "", needScan);
+    public void addJar(String sourcePath, String unzipPath,String destPath,  boolean needScan) {
+        this.addJar(sourcePath, unzipPath, destPath,"", needScan);
     }
 
-    public void addJar(String sourcePath, String unzipPath) {
-        this.addJar(sourcePath, unzipPath, true);
+    public void addJar(String sourcePath, String unzipPath,String destPath) {
+        this.addJar(sourcePath, unzipPath, destPath,true);
     }
 
-    public void addJar(String sourcePath, String unzipPath, String ignorePattern) {
-        this.addJar(sourcePath, unzipPath, ignorePattern, true);
-    }
 
+    /**
+     * 需要收集的 目录
+     * @param sourcePath 目录源路径
+     * @param ignorePattern 忽略文件的正则
+     * @param needScan 是否需要遍历收集
+     */
+    public void addDirectory(String sourcePath,String destPath, String ignorePattern, boolean needScan) {
+        this.dirModels.add(new CollectorDirModel(sourcePath,destPath,ignorePattern,needScan));
+    }
     public void addDirectory(String sourcePath) {
         this.addDirectory(sourcePath,  true);
     }
-    public void addDirectory(String sourcePath,String ignorePattern) {
-        this.addDirectory(sourcePath, ignorePattern,  true);
-    }
     public void addDirectory(String sourcePath,  boolean needCopy) {
-        this.addDirectory(sourcePath, "", needCopy);
+        this.addDirectory(sourcePath,sourcePath, "", needCopy);
     }
 
 
@@ -130,7 +125,7 @@ public class ClassCollectorExecutor {
         // 收集单文件 jar 包，此jar 不需要解压
         // 收集单文件
         for (CollectorSingleFileModel singleFileModel : singleFileModels) {
-            collectorResult.addSingleFile(new CompileSingleFileModel(singleFileModel.getSourcePath(),singleFileModel.isNeedScan()));
+            collectorResult.addSingleFile(new CompileSingleFileModel(singleFileModel.getSourcePath(),singleFileModel.getDestPath(),singleFileModel.isNeedScan()));
         }
         int count = 0;
         // 收集 jar 包文件
@@ -138,7 +133,7 @@ public class ClassCollectorExecutor {
             execService.submit(TaskUtil.getTask(() -> {
                 try {
                     ArrayList<CompileSingleFileModel> containFiles =    FileUtil.collectFiles(jarModel.getUnzipDirPath() , jarModel.getIgnorePattern(),true);
-                    CompileJarModel compileJarModel = new CompileJarModel(jarModel.getSourceJarPath(),jarModel.getUnzipDirPath(),jarModel.isNeedScan());
+                    CompileJarModel compileJarModel = new CompileJarModel(jarModel.getSourceJarPath(),jarModel.getUnzipDirPath(),jarModel.getDestPath(),jarModel.isNeedScan());
                     containFiles.forEach(compileJarModel::addChildFile);
                     collectorResult.addJarModel(compileJarModel);
                 } catch (Exception e) {
@@ -152,7 +147,7 @@ public class ClassCollectorExecutor {
             execService.submit(TaskUtil.getTask(() -> {
                 try {
                     ArrayList<CompileSingleFileModel> containFiles = FileUtil.collectFiles(dirModel.getSourceDirPath(),dirModel.getIgnorePattern(),true);
-                    CompileDirModel compileDirModel = new CompileDirModel(dirModel.getSourceDirPath(),dirModel.isNeedScan());
+                    CompileDirModel compileDirModel = new CompileDirModel(dirModel.getSourceDirPath(),dirModel.getDestPath(),dirModel.isNeedScan());
                     containFiles.forEach(compileDirModel::addChildFile);
                     collectorResult.addDirModel(compileDirModel);
                 } catch (Exception e) {

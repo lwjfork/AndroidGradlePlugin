@@ -8,9 +8,16 @@ import java.io.Serializable;
 public class CompileSingleFileModel implements Serializable {
     // 文件路径
     private String sourcePath;
+    private String destPath;
 
     private boolean needScan = true;
 
+
+    public CompileSingleFileModel(String sourcePath,String destPath, boolean needScan) {
+        this.sourcePath = sourcePath;
+        this.needScan = needScan;
+        this.destPath = destPath;
+    }
 
     public CompileSingleFileModel(String sourcePath, boolean needScan) {
         this.sourcePath = sourcePath;
@@ -35,5 +42,22 @@ public class CompileSingleFileModel implements Serializable {
 
     public void setNeedScan(boolean needScan) {
         this.needScan = needScan;
+    }
+
+    public String getDestPath() {
+        return destPath;
+    }
+
+    public void setDestPath(String destPath) {
+        this.destPath = destPath;
+    }
+
+    @Override
+    public String toString() {
+        return "CompileSingleFileModel{" +
+                "sourcePath='" + sourcePath + '\'' +
+                ", destPath='" + destPath + '\'' +
+                ", needScan=" + needScan +
+                '}';
     }
 }

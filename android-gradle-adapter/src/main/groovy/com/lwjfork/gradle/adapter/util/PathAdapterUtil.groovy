@@ -1,8 +1,9 @@
 package com.lwjfork.gradle.adapter.util
 
+
 import com.lwjfork.gradle.adapter.model.VariantInfoModel
-import org.gradle.api.Project
 import com.lwjfork.gradle.utils.PathUtil
+import org.gradle.api.Project
 
 /**
  * Created by lwj on 2020/8/19.

@@ -10,14 +10,16 @@ import java.util.ArrayList;
 public class CompileDirModel implements Serializable {
     // 目录 路径
     private String sourcePath;
-
+    // 最终的路径
+    private String destPath;
     private ArrayList<CompileSingleFileModel> childFiles = new ArrayList<>();
 
     private boolean needScan = true;
 
-    public CompileDirModel(String sourcePath, boolean needScan) {
+    public CompileDirModel(String sourcePath,String destPath, boolean needScan) {
         this.sourcePath = sourcePath;
         this.needScan = needScan;
+        this.destPath = destPath;
     }
 
     public String getSourcePath() {
@@ -47,5 +49,13 @@ public class CompileDirModel implements Serializable {
 
     public void setNeedScan(boolean needScan) {
         this.needScan = needScan;
+    }
+
+    public String getDestPath() {
+        return destPath;
+    }
+
+    public void setDestPath(String destPath) {
+        this.destPath = destPath;
     }
 }

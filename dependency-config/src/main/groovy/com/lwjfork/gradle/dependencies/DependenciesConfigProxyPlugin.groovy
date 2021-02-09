@@ -8,7 +8,6 @@ import com.android.build.gradle.LibraryPlugin
 import com.lwjfork.gradle.dependencies.model.DependencyModel
 import com.lwjfork.gradle.dependencies.utils.DependenciesUtil
 import com.lwjfork.gradle.adapter.plugin.proxy.ModulePluginProxy
-import com.lwjfork.gradle.utils.Utils
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
 
@@ -58,7 +57,7 @@ class DependenciesConfigProxyPlugin extends ModulePluginProxy {
      * @return
      */
     def applyDependencyHandler(Project project) {
-        if (runAsApp && assembleModule == currentModule) {
+        if (runAsApp && assembleModule == moduleName) {
             project.afterEvaluate {
                 configDependencies.eachWithIndex { Map.Entry<String, ArrayList<DependencyModel>> entry, int i ->
                     entry.value.each {
@@ -119,7 +118,7 @@ class DependenciesConfigProxyPlugin extends ModulePluginProxy {
 
 
     def addDependency(Project project, String buildTypeName, Dependency dependency, Closure closure) {
-        if (Utils.isEmpty(buildTypeName)) {
+        if (buildTypeName == null && buildTypeName.length() == 0) {
             projectBuildTypes.each {
                 String dependencySysName = DependenciesUtil.dependencySysName(project, it)
                 addDependencyByBuildType(project, dependencySysName, dependency, closure)

@@ -10,24 +10,19 @@ public class CollectorDirModel implements Serializable {
 
     // 源路径
     private String sourceDirPath;
+    // 目的路径
+    private String destPath;
     // 是否需要 copy，默认需要复制
     private boolean needScan = true;
     private String ignorePattern;
 
-    public CollectorDirModel(String sourceDirPath, boolean needScan, String ignorePattern) {
+    public CollectorDirModel(String sourceDirPath,String destPath,  String ignorePattern,boolean needScan) {
         this.sourceDirPath = sourceDirPath;
         this.needScan = needScan;
         this.ignorePattern = ignorePattern;
+        this.destPath = destPath;
     }
 
-    public CollectorDirModel(String sourceDirPath, boolean needScan) {
-        this.sourceDirPath = sourceDirPath;
-        this.needScan = needScan;
-    }
-
-    public CollectorDirModel(String sourceDirPath) {
-       this(sourceDirPath,true,"");
-    }
 
     public String getSourceDirPath() {
         return sourceDirPath;
@@ -51,5 +46,13 @@ public class CollectorDirModel implements Serializable {
 
     public void setIgnorePattern(String ignorePattern) {
         this.ignorePattern = ignorePattern;
+    }
+
+    public String getDestPath() {
+        return destPath;
+    }
+
+    public void setDestPath(String destPath) {
+        this.destPath = destPath;
     }
 }

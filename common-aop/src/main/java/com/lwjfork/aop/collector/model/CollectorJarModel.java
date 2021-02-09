@@ -12,26 +12,19 @@ public class CollectorJarModel implements Serializable {
     private String sourceJarPath;
     // jar 的解压路径
     private String unzipDirPath;
+    // jar 最终输出路径
+    private String destPath;
     private String ignorePattern;
     // 是否需要 copy，默认需要扫描
     private boolean needScan = true;
 
 
-    public CollectorJarModel(String sourceJarPath, String unzipDirPath, String ignorePattern, boolean needScan) {
+    public CollectorJarModel(String sourceJarPath, String unzipDirPath,String destPath, String ignorePattern, boolean needScan) {
         this.sourceJarPath = sourceJarPath;
         this.unzipDirPath = unzipDirPath;
         this.ignorePattern = ignorePattern;
+        this.destPath = destPath;
         this.needScan = needScan;
-    }
-
-    public CollectorJarModel(String sourceJarPath, String unzipDirPath, String ignorePattern) {
-        this.sourceJarPath = sourceJarPath;
-        this.unzipDirPath = unzipDirPath;
-        this.ignorePattern = ignorePattern;
-    }
-
-    public CollectorJarModel(String sourceJarPath, String unzipDirPath) {
-       this(sourceJarPath,unzipDirPath,"");
     }
 
     public String getSourceJarPath() {
@@ -64,5 +57,13 @@ public class CollectorJarModel implements Serializable {
 
     public void setNeedScan(boolean needScan) {
         this.needScan = needScan;
+    }
+
+    public String getDestPath() {
+        return destPath;
+    }
+
+    public void setDestPath(String destPath) {
+        this.destPath = destPath;
     }
 }

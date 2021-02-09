@@ -5,6 +5,7 @@ import com.lwjfork.aop.packetizer.model.PacketJarModel;
 import com.lwjfork.aop.utils.FileUtil;
 import com.lwjfork.aop.utils.TaskUtil;
 
+import java.io.File;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.concurrent.*;
@@ -22,9 +23,13 @@ public class PacketizerExecutor {
     ArrayList<PacketDirModel> dirModels = new ArrayList<>();
 
     ArrayList<PacketJarModel> jarModels = new ArrayList<>();
+    boolean deleteUnzipJar = true;
 
+    public PacketizerExecutor(boolean deleteUnzipJar) {
+        this.deleteUnzipJar = deleteUnzipJar;
+    }
 
-    public void addDirectory(String sourcePath, String destPath, String ignorePattern, boolean needCopy,boolean deleteSrc) {
+    public void addDirectory(String sourcePath, String destPath, String ignorePattern, boolean needCopy, boolean deleteSrc) {
         PacketDirModel packetDirModel = new PacketDirModel();
         packetDirModel.sourceDirPath = sourcePath;
         packetDirModel.destDirPath = destPath;
@@ -34,25 +39,25 @@ public class PacketizerExecutor {
         this.dirModels.add(packetDirModel);
     }
 
-    public void addDirectory(String sourcePath, String destPath, boolean needCopy,boolean deleteSrc) {
-        this.addDirectory(sourcePath, destPath, "", needCopy,deleteSrc);
+    public void addDirectory(String sourcePath, String destPath, boolean needCopy, boolean deleteSrc) {
+        this.addDirectory(sourcePath, destPath, "", needCopy, deleteSrc);
     }
-
 
 
     public void addDirectory(String sourcePath, String destPath, boolean needCopy) {
-        this.addDirectory(sourcePath, destPath, "", needCopy,true);
+        this.addDirectory(sourcePath, destPath, "", needCopy, true);
     }
 
     public void addDirectory(String sourcePath, String destPath, String ignorePattern) {
-        this.addDirectory(sourcePath, destPath, ignorePattern, true,true);
+        this.addDirectory(sourcePath, destPath, ignorePattern, true, true);
     }
+
     public void addDirectory(String sourcePath, String destPath) {
-        this.addDirectory(sourcePath, destPath,  "");
+        this.addDirectory(sourcePath, destPath, "");
     }
 
 
-    public void addJar(String sourcePath, String unzipPath, String destPath, String ignorePattern, boolean needCopy,boolean deleteSrc) {
+    public void addJar(String sourcePath, String unzipPath, String destPath, String ignorePattern, boolean needCopy, boolean deleteSrc) {
         PacketJarModel jarModel = new PacketJarModel();
         jarModel.sourceJarPath = sourcePath;
         jarModel.unzipDirPath = unzipPath;
@@ -64,7 +69,7 @@ public class PacketizerExecutor {
     }
 
     public void addJar(String sourcePath, String unzipPath, String destPath, boolean needCopy) {
-        this.addJar(sourcePath, unzipPath, destPath, "", needCopy,true);
+        this.addJar(sourcePath, unzipPath, destPath, "", needCopy, true);
     }
 
     public void addJar(String sourcePath, String unzipPath, String destPath, String ignorePattern) {
@@ -75,29 +80,29 @@ public class PacketizerExecutor {
         this.addJar(sourcePath, unzipPath, destPath, "");
     }
 
-    public void packet()  {
+    public void packet() {
         try {
             // 将解压的jar包压缩
             zip();
             // 复制jar 和 dir
             copy();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void copy()throws  InterruptedException, ExecutionException{
+    private void copy() throws InterruptedException, ExecutionException {
         ExecutorService exec = Executors.newCachedThreadPool();
         CompletionService<Void> execService = new ExecutorCompletionService<Void>(exec);
         int count = 0;
         for (PacketJarModel jarModel : jarModels) {
-            if(jarModel.needCopy){
+            if (jarModel.needCopy) {
                 execService.submit(new Callable<Void>() {
                     @Override
                     public Void call() throws Exception {
-                        FileUtil.copyZipFile(jarModel.unzipDirPath + ".jar", jarModel.destJarPath,"", StandardCopyOption.REPLACE_EXISTING);
-                        if(jarModel.deleteSrc){
-                            FileUtil.deleteIfExists(jarModel.unzipDirPath+".jar");
+                        FileUtil.copyZipFile(jarModel.unzipDirPath + ".jar", jarModel.destJarPath, "", StandardCopyOption.REPLACE_EXISTING);
+                        if (jarModel.deleteSrc) {
+                            FileUtil.deleteIfExists(jarModel.unzipDirPath + ".jar");
                         }
                         return null;
                     }
@@ -106,11 +111,11 @@ public class PacketizerExecutor {
             }
         }
         for (PacketDirModel dirModel : dirModels) {
-            if(dirModel.needCopy){
+            if (dirModel.needCopy) {
                 execService.submit(new Callable<Void>() {
                     @Override
                     public Void call() throws Exception {
-                        FileUtil.copyDirectory(dirModel.sourceDirPath , dirModel.destDirPath,dirModel.ignorePattern, StandardCopyOption.REPLACE_EXISTING);
+                        FileUtil.copyDirectory(dirModel.sourceDirPath, dirModel.destDirPath, dirModel.ignorePattern, StandardCopyOption.REPLACE_EXISTING);
                         return null;
                     }
                 });
@@ -123,17 +128,25 @@ public class PacketizerExecutor {
         }
         exec.shutdown();
     }
-    private void zip() throws  InterruptedException, ExecutionException {
+
+    private void zip() throws InterruptedException, ExecutionException {
         ExecutorService exec = Executors.newCachedThreadPool();
         CompletionService<Void> execService = new ExecutorCompletionService<Void>(exec);
         int count = 0;
         for (PacketJarModel jarModel : jarModels) {
-            if(!jarModel.needCopy){
+            if (!jarModel.needCopy) {
                 continue;
             }
             execService.submit(TaskUtil.getTask(() -> {
                 try {
-                    FileUtil.zip(jarModel.unzipDirPath, jarModel.unzipDirPath + ".jar",jarModel.ignorePattern, true);
+
+                    File dir = new File(jarModel.unzipDirPath);
+                    if (dir.exists() && dir.isDirectory() && dir.listFiles() != null && dir.listFiles().length > 0) {
+                        FileUtil.zip(jarModel.unzipDirPath, jarModel.unzipDirPath + ".jar", jarModel.ignorePattern, deleteUnzipJar);
+                    } else if (dir.exists() && dir.isDirectory() && dir.listFiles() != null && dir.listFiles().length == 0) {
+                        // 空文件，直接忽略掉，直接从原来的复制过去吧
+                        FileUtil.copyFile(jarModel.sourceJarPath, jarModel.unzipDirPath + ".jar");
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

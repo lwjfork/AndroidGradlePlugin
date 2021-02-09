@@ -10,10 +10,10 @@ import org.gradle.api.Project
 abstract class ModulePluginProxy extends IPluginProxy {
 
 // 构建
-    boolean isAssembleTask = false
+    boolean isAssemble = false
     //默认是app，assembleRelease == app:assembleRelease
-    String assembleModule = ""
-    String currentModule = ""
+    String assembleModule = "app"
+    String moduleName = ""
     // module name
     ArrayList<String> modules = new ArrayList<>()
 
@@ -24,10 +24,10 @@ abstract class ModulePluginProxy extends IPluginProxy {
     }
     // 是否运行打包
     def initRunConfiguration(Project project) {
-        currentModule = project.path.replace(":", "")
+        moduleName = project.path.replace(":", "")
         List<String> taskNames = project.gradle.startParameter.taskNames
         initTaskInfo(taskNames)
-        if (isAssembleTask) { // 构建，获取构建的 module
+        if (isAssemble) { // 构建，获取构建的 module
             if (modules.size() > 0 && modules.get(0) != null) {
                 assembleModule = modules.get(0)
             }
@@ -43,7 +43,7 @@ abstract class ModulePluginProxy extends IPluginProxy {
                     || taskName.toUpperCase().contains("TINKER") // tinker....
                     || taskName.toUpperCase().contains("INSTALL") // install before  assemble
                     || taskName.toUpperCase().contains("RESGUARD")) { // 资源压缩
-                isAssembleTask = true
+                isAssemble = true
                 String[] array = taskName.split(":")
                 if (array.size() > 1) {
                     modules.add(array[array.length - 2])

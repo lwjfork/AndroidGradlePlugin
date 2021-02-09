@@ -10,6 +10,7 @@ import org.gradle.api.file.ConfigurableFileCollection
  *  lwjfork@gmail.com
  */
 class TaskAdapterUtil {
+
     private static def compatGetTask(def variant, String... candidates) {
         candidates?.findResult {
             variant.metaClass.respondsTo(variant, it).with {

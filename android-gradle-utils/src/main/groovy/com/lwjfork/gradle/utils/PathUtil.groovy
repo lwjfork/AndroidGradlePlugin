@@ -1,5 +1,6 @@
 package com.lwjfork.gradle.utils
 
+import com.android.build.gradle.internal.pipeline.IntermediateFolderUtils
 import org.apache.commons.codec.digest.DigestUtils
 import org.gradle.api.Project
 
@@ -19,6 +20,7 @@ class PathUtil {
         getBuildDir(project) + File.separator + "outputs"
     }
     static def getIntermediatesDir(Project project) {
+        IntermediateFolderUtils
         return project.buildDir.absolutePath + File.separator +
                 'intermediates' + File.separator
     }

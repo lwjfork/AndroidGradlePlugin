@@ -39,5 +39,4 @@ rootProject.ext.PROJ_NAME = rootProject.publishArtifactid.manifestUpdate
 rootProject.ext.PROJ_PACKAGING = 'jar'
 rootProject.ext.PROJ_DESCRIPTION = 'Android Gradle Plugin Common Library'
 
-//apply from: '../publishLocal.gradle'
 apply from: '../bintray.gradle'
