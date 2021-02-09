@@ -4,4 +4,7 @@ include 'module-config'
 include 'view-inject'
 include 'manifest-update'
 include 'runnable-config'
+include 'android-gradle-utils'
+include 'android-gradle-adapter'
+include 'common-aop'
 

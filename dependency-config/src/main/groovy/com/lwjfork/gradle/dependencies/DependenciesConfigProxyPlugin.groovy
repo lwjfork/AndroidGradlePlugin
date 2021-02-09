@@ -58,7 +58,7 @@ class DependenciesConfigProxyPlugin extends ModulePluginProxy {
      * @return
      */
     def applyDependencyHandler(Project project) {
-        if (runAsApp && assembleModule == moduleName) {
+        if (runAsApp && assembleModule == currentModule) {
             project.afterEvaluate {
                 configDependencies.eachWithIndex { Map.Entry<String, ArrayList<DependencyModel>> entry, int i ->
                     entry.value.each {

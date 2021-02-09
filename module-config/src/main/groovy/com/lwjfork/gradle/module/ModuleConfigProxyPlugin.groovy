@@ -31,10 +31,9 @@ class ModuleConfigProxyPlugin extends ModulePluginProxy {
         /**
          * 可以以 Application 并且当前运行的就是该 module
          */
-        if (runAsApp && assembleModule == moduleName) {
+        if(runAsApp){
             ModuleUtil.applyApplication(project)
-
-        } else {
+        }else {
             ModuleUtil.applyLibrary(project)
         }
     }
@@ -64,10 +63,9 @@ class ModuleConfigProxyPlugin extends ModulePluginProxy {
      * @return
      */
     def configApplicationId(Project project) {
-        if (runAsApp && assembleModule == moduleName) {
+        if (runAsApp ) {
             String applicationId = getApplicationId(project)
             if (applicationId == null || applicationId.length() == 0) {
-
                 throw new IllegalArgumentException(" componentAppId 不能为空，如果组件 ${project.name} 可以作为APP单独运行，将以 componentAppId 的值作为 applicationId，\n请在build.gradle的defaultConfig节点中添加内容\n\n" +
                         "defaultConfig{\n" +
                         "   // 指定该app的 applicationId\n" +
@@ -75,7 +73,10 @@ class ModuleConfigProxyPlugin extends ModulePluginProxy {
                         "   ..........\n" +
                         "}\n")
             }
-            project.android.defaultConfig.applicationId = applicationId
+            // 配置 applicationId
+            if(assembleModule == moduleName){
+                project.android.defaultConfig.applicationId = applicationId
+            }
         }
     }
 

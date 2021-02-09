@@ -6,9 +6,16 @@ import com.lwjfork.gradle.inject.InjectViewProxyPlugin
 import com.lwjfork.gradle.manifest.UpdateModuleManifestProxyPlugin
 import com.lwjfork.gradle.module.ModuleConfigProxyPlugin
 import com.lwjfork.gradle.runnable.RunAbleProxyPlugin
+import com.lwjfork.gradle.utils.Utils
 import org.gradle.api.Project
 
 class TestPlugin  extends BasePlugin {
+
+ @Override
+ void apply(Project project) {
+  super.apply(project)
+ }
+
  @Override
  Object initPluginProxy() {
   ModuleConfigProxyPlugin configProxyPlugin = new ModuleConfigProxyPlugin()
@@ -19,6 +26,7 @@ class TestPlugin  extends BasePlugin {
     super.checkRunAble(project)
     dependenciesConfigProxyPlugin.runAsApp(isRunAble)
     configProxyPlugin.runAsApp(isRunAble)
+//    Utils.printLine("isRunAble =" + isRunAble + ', moduleName ='+ currentModule + ' assembleModule=' + assembleModule)
    }
   }
   pluginProxies.add(runAbleProxyPlugin)

@@ -12,8 +12,8 @@ ext {
 //            androidGradle: "com.android.tools.build:gradle:3.5.3",
 //            androidGradle: "com.android.tools.build:gradle:3.5.4",
              //=========== 3.6.x ==============
-            androidGradle: "com.android.tools.build:gradle:3.6.0",
-//            androidGradle: "com.android.tools.build:gradle:3.6.1",
+//            androidGradle: "com.android.tools.build:gradle:3.6.0",
+            androidGradle: "com.android.tools.build:gradle:3.6.1",
 //            androidGradle: "com.android.tools.build:gradle:3.6.2",
 //            androidGradle: "com.android.tools.build:gradle:3.6.3",
 //            androidGradle: "com.android.tools.build:gradle:3.6.4",
@@ -27,13 +27,34 @@ ext {
 //            androidGradle: "com.android.tools.build:gradle:4.1.0",
 
              groovy:'org.codehaus.groovy:groovy-all:2.5.8',
-             androidGradleAdapter:'com.lwjfork.gradle:android-gradle-adapter:0.0.1',
-             androidGradleUtils:'com.lwjfork.gradle:android-gradle-utils:0.0.1',
-             commonAOP:'com.lwjfork.gradle:common-aop:0.0.1',
-             dependencyConfig :'com.lwjfork.gradle:dependency-config:0.0.1',
-             viewInject :'com.lwjfork.gradle:view-inject:0.0.1',
-             manifestUpdate :'com.lwjfork.gradle:manifest-update:0.0.1',
-             moduleConfig :'com.lwjfork.gradle:module-config:0.0.1',
-             runnableConfig:'com.lwjfork.gradle:runnable-config:0.0.1'
+             commonsCodec: 'commons-codec:commons-codec:1.10',
+             javassist:'org.javassist:javassist:3.27.0-GA',
+             gson:'com.google.code.gson:gson:2.8.6'
     ]
+
+
+    publishGroup = 'com.lwjfork.gradle'
+
+    publishVersion = [
+            androidGradleAdapter:'0.0.3',
+            androidGradleUtils:'0.0.3',
+            commonAOP:'0.0.3',
+            dependencyConfig :'0.0.2',
+            viewInject :'0.0.2',
+            manifestUpdate :'0.0.2',
+            moduleConfig :'0.0.2',
+            runnableConfig:'0.0.2'
+    ]
+
+    publishArtifactid = [
+            androidGradleAdapter:'android-gradle-adapter',
+            androidGradleUtils:'android-gradle-utils',
+            commonAOP:'common-aop',
+            dependencyConfig :'dependency-config',
+            viewInject :'view-inject',
+            manifestUpdate :'manifest-update',
+            moduleConfig :'module-config',
+            runnableConfig:'runnable-config'
+    ]
+
 }

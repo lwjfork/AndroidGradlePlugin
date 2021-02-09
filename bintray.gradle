@@ -24,13 +24,12 @@ install {
     repositories.mavenInstaller {
         pom {
             project {
-                groupId rootProject.ext.PROJ_GROUP
-                artifactId rootProject.ext.PROJ_ARTIFACTID
                 packaging rootProject.ext.PROJ_PACKAGING
+
                 //添加项目描述
-                name rootProject.ext.PROJ_NAME
+                name rootProject.ext.PROJ_DESCRIPTION
                 url rootProject.ext.PROJ_WEBSITEURL
-                description rootProject.ext.PROJ_DESCRIPTION
+
                 //设置开源证书信息
                 licenses {
                     license {
@@ -60,12 +59,8 @@ install {
 if (project.hasProperty("kotlin")) {//Kotlin libraries
     task sourcesJar(type: Jar) {
         classifier = 'sources'
-        from android.sourceSets.main.java.srcDirs
+        from sourceSets.main.java.srcDirs
     }
-    task javadoc(type: Javadoc, dependsOn: dokka) {
-
-    }
-
 } else if (project.hasProperty("android")) {// Android libraries
     task sourcesJar(type: Jar) {
         classifier = 'sources'

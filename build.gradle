@@ -16,14 +16,14 @@ dependencies {
     implementation localGroovy()
     implementation rootProject.dependenciesRep.androidGradle
     implementation rootProject.dependenciesRep.groovy
-    implementation rootProject.dependenciesRep.androidGradleAdapter
-    implementation rootProject.dependenciesRep.androidGradleUtils
-    implementation rootProject.dependenciesRep.commonAOP
-    implementation rootProject.dependenciesRep.dependencyConfig
-    implementation rootProject.dependenciesRep.viewInject
-    implementation rootProject.dependenciesRep.manifestUpdate
-    implementation rootProject.dependenciesRep.moduleConfig
-    implementation rootProject.dependenciesRep.runnableConfig
+
+    implementation "${rootProject.publishGroup}:${rootProject.publishArtifactid.androidGradleAdapter}:${rootProject.publishVersion.androidGradleAdapter}"
+    implementation "${rootProject.publishGroup}:${rootProject.publishArtifactid.androidGradleUtils}:${rootProject.publishVersion.androidGradleUtils}"
+    implementation "${rootProject.publishGroup}:${rootProject.publishArtifactid.dependencyConfig}:${rootProject.publishVersion.dependencyConfig}"
+    implementation "${rootProject.publishGroup}:${rootProject.publishArtifactid.viewInject}:${rootProject.publishVersion.viewInject}"
+    implementation "${rootProject.publishGroup}:${rootProject.publishArtifactid.manifestUpdate}:${rootProject.publishVersion.manifestUpdate}"
+    implementation "${rootProject.publishGroup}:${rootProject.publishArtifactid.moduleConfig}:${rootProject.publishVersion.moduleConfig}"
+    implementation "${rootProject.publishGroup}:${rootProject.publishArtifactid.runnableConfig}:${rootProject.publishVersion.runnableConfig}"
 }
 
 //#这里改成开发者id，比如
@@ -46,3 +46,13 @@ rootProject.ext.PROJ_REPO = "maven"
 rootProject.ext.BINTRAY_USER = System.getenv("BINTRAY_USER") //
 //# key
 rootProject.ext.BINTRAY_APIKEY = System.getenv("BINTRAY_APIKEY")
+
+
+rootProject.ext.PROJ_VERSION = "1.0.0-SNAPSHOT"
+//rootProject.ext.PROJ_VERSION = "0.0.2"
+rootProject.ext.PROJ_ARTIFACTID = "test-plugin"
+rootProject.ext.PROJ_NAME = "test-plugin"
+rootProject.ext.PROJ_PACKAGING = 'jar'
+rootProject.ext.PROJ_DESCRIPTION = 'Android Gradle Plugin Test'
+apply from: "publishLocal.gradle"
+

@@ -17,11 +17,17 @@ class RunAbleProxyPlugin extends ModulePluginProxy {
 
     def checkRunAble(Project project) {
         initRunConfiguration(project)
-        isRunAble = getRunAbleFromProperty(project)
-        if (isRunAble && isAssemble) {
-            if (moduleName != assembleModule && moduleName != "app") {
-                isRunAble = false
+        // 配置是否可以单独运行
+        def runAbleConfig = getRunAbleFromProperty(project)
+        if(runAbleConfig){
+            if(isAssembleTask){ // 执行打包任务
+                // 当前module 就是打包的 module 则可以运行，否则不运行
+                isRunAble = currentModule == assembleModule
+            }else {
+                isRunAble = true
             }
+        }else {
+            isRunAble = false
         }
     }
     /**
