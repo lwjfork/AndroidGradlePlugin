@@ -1,41 +1,26 @@
-buildscript {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
-    }
-}
-apply plugin:'groovy'
-
-group 'com.lwjfork.gradle'
-version '1.0-SNAPSHOT'
+apply plugin: 'groovy'
+apply plugin: 'java'
 apply from: '../config.gradle'
-
 repositories {
     mavenLocal()
     mavenCentral()
     google()
     jcenter()
 }
-
 dependencies {
     implementation gradleApi()
     implementation localGroovy()
     implementation rootProject.dependenciesRep.androidGradle
     implementation rootProject.dependenciesRep.groovy
+
     implementation "${rootProject.publishGroup}:${rootProject.publishArtifactid.androidGradleUtils}:${rootProject.publishVersion.androidGradleUtils}"
     implementation "${rootProject.publishGroup}:${rootProject.publishArtifactid.androidGradleAdapter}:${rootProject.publishVersion.androidGradleAdapter}"
 }
 
 rootProject.ext.PROJ_VERSION = rootProject.publishVersion.viewInject
+rootProject.ext.PROJ_SNAPSHOT_VERSION = rootProject.ext.PROJ_VERSION+'-SNAPSHOT'
 rootProject.ext.PROJ_ARTIFACTID = rootProject.publishArtifactid.viewInject
 rootProject.ext.PROJ_NAME = rootProject.publishArtifactid.viewInject
 rootProject.ext.PROJ_PACKAGING = 'jar'
 rootProject.ext.PROJ_DESCRIPTION = 'Android Gradle Plugin InjectView'
-apply from: "../bintray.gradle"
-//apply from: '../publishLocal.gradle'
+apply from: "../publish.gradle"

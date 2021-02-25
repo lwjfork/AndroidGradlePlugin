@@ -6,7 +6,6 @@ import com.lwjfork.gradle.inject.InjectViewProxyPlugin
 import com.lwjfork.gradle.manifest.UpdateModuleManifestProxyPlugin
 import com.lwjfork.gradle.module.ModuleConfigProxyPlugin
 import com.lwjfork.gradle.runnable.RunAbleProxyPlugin
-import com.lwjfork.gradle.utils.Utils
 import org.gradle.api.Project
 
 class TestPlugin  extends BasePlugin {

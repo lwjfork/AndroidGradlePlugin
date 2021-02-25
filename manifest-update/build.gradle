@@ -1,21 +1,6 @@
-buildscript {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
-    }
-}
-apply plugin:'groovy'
-
-group 'com.lwjfork.gradle'
-version '1.0-SNAPSHOT'
+apply plugin: 'groovy'
+apply plugin: 'java'
 apply from: '../config.gradle'
-
 repositories {
     mavenLocal()
     mavenCentral()
@@ -34,9 +19,10 @@ dependencies {
 }
 
 rootProject.ext.PROJ_VERSION = rootProject.publishVersion.manifestUpdate
+rootProject.ext.PROJ_SNAPSHOT_VERSION = rootProject.ext.PROJ_VERSION+'-SNAPSHOT'
 rootProject.ext.PROJ_ARTIFACTID = rootProject.publishArtifactid.manifestUpdate
 rootProject.ext.PROJ_NAME = rootProject.publishArtifactid.manifestUpdate
 rootProject.ext.PROJ_PACKAGING = 'jar'
 rootProject.ext.PROJ_DESCRIPTION = 'Android Gradle Plugin Common Library'
 
-apply from: '../bintray.gradle'
+apply from: '../publish.gradle'

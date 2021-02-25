@@ -1,9 +1,6 @@
 package com.lwjfork.aop.analyzer;
 
-import com.lwjfork.aop.analyzer.exector.IDirectoryAnalyzer;
-import com.lwjfork.aop.analyzer.exector.IJarAnalyzer;
-import com.lwjfork.aop.analyzer.exector.IOriginJarAnalyzer;
-import com.lwjfork.aop.analyzer.exector.ISingleFileAnalyzer;
+import com.lwjfork.aop.analyzer.exector.*;
 import com.lwjfork.aop.collector.model.CollectorResult;
 
 import java.util.ArrayList;
@@ -18,6 +15,7 @@ public class AnalyzerExecutor {
      * 收集的文件信息
      */
     private CollectorResult result;
+
     public AnalyzerExecutor(CollectorResult result) {
         this.result = result;
     }
@@ -38,94 +36,114 @@ public class AnalyzerExecutor {
      * 单文件分析器
      */
     private ArrayList<ISingleFileAnalyzer> singleFileAnalyzers = new ArrayList<>();
-    public void analyze(){
-     if(result == null){
-         return;
-     }
-     beforeAnalyze();
-     realAnalyze();
-     afterAnalyze();
+
+    private ArrayList<IAnalyzer<Void>> analyzers = new ArrayList<>();
+
+    public void analyze() {
+        if (result == null) {
+            return;
+        }
+        beforeAnalyze();
+        for (IAnalyzer<Void> analyzer : analyzers) {
+            analyzer.before(null);
+        }
+        realAnalyze();
+        for (IAnalyzer<Void> analyzer : analyzers) {
+            analyzer.analyze(null);
+        }
+        afterAnalyze();
+        for (IAnalyzer<Void> analyzer : analyzers) {
+            analyzer.after(null);
+        }
     }
 
-    public void beforeAnalyze(){
-        result.getSingleFiles().forEach(item->{
-            singleFileAnalyzers.forEach(Analyzer->{
-                Analyzer.before(item);
-            });
-        });
-        result.getDirs().forEach(item->{
-            directoryAnalyzers.forEach(Analyzer->{
-                Analyzer.before(item);
-            });
-        });
-        result.getJars().forEach(item->{
-            jarAnalyzers.forEach(Analyzer->{
-                Analyzer.before(item);
-            });
-        });
-        result.getOriginJarPaths().forEach(item->{
-            originJarAnalyzers.forEach(Analyzer->{
-                Analyzer.before(item);
-            });
-        });
-    }
 
-    public void realAnalyze(){
-        result.getSingleFiles().forEach(item->{
-            singleFileAnalyzers.forEach(Analyzer->{
-                Analyzer.analyze(item);
+    public void beforeAnalyze() {
+        result.getSingleFiles().forEach(item -> {
+            singleFileAnalyzers.forEach(Analyzer -> {
+                Analyzer.before(item);
             });
         });
-        result.getDirs().forEach(item->{
-            directoryAnalyzers.forEach(Analyzer->{
-                Analyzer.analyze(item);
+        result.getDirs().forEach(item -> {
+            directoryAnalyzers.forEach(Analyzer -> {
+                Analyzer.before(item);
             });
         });
-        result.getJars().forEach(item->{
-            jarAnalyzers.forEach(Analyzer->{
-                Analyzer.analyze(item);
+        result.getJars().forEach(item -> {
+            jarAnalyzers.forEach(Analyzer -> {
+                Analyzer.before(item);
             });
         });
-        result.getOriginJarPaths().forEach(item->{
-            originJarAnalyzers.forEach(Analyzer->{
-                Analyzer.analyze(item);
+        result.getOriginJarPaths().forEach(item -> {
+            originJarAnalyzers.forEach(Analyzer -> {
+                Analyzer.before(item);
             });
         });
     }
 
-    public void afterAnalyze(){
-        result.getSingleFiles().forEach(item->{
-            singleFileAnalyzers.forEach(Analyzer->{
+    public void realAnalyze() {
+        result.getSingleFiles().forEach(item -> {
+            singleFileAnalyzers.forEach(Analyzer -> {
+                Analyzer.analyze(item);
+            });
+        });
+        result.getDirs().forEach(item -> {
+            directoryAnalyzers.forEach(Analyzer -> {
+                Analyzer.analyze(item);
+            });
+        });
+        result.getJars().forEach(item -> {
+            jarAnalyzers.forEach(Analyzer -> {
+                Analyzer.analyze(item);
+            });
+        });
+        result.getOriginJarPaths().forEach(item -> {
+            originJarAnalyzers.forEach(Analyzer -> {
+                Analyzer.analyze(item);
+            });
+        });
+    }
+
+    public void afterAnalyze() {
+        result.getSingleFiles().forEach(item -> {
+            singleFileAnalyzers.forEach(Analyzer -> {
                 Analyzer.after(item);
             });
         });
-        result.getDirs().forEach(item->{
-            directoryAnalyzers.forEach(Analyzer->{
+        result.getDirs().forEach(item -> {
+            directoryAnalyzers.forEach(Analyzer -> {
                 Analyzer.after(item);
             });
         });
-        result.getJars().forEach(item->{
-            jarAnalyzers.forEach(Analyzer->{
+        result.getJars().forEach(item -> {
+            jarAnalyzers.forEach(Analyzer -> {
                 Analyzer.after(item);
             });
         });
-        result.getOriginJarPaths().forEach(item->{
-            originJarAnalyzers.forEach(Analyzer->{
+        result.getOriginJarPaths().forEach(item -> {
+            originJarAnalyzers.forEach(Analyzer -> {
                 Analyzer.after(item);
             });
         });
     }
 
-    public void addSingleFileAnalyzer(ISingleFileAnalyzer singleFileAnalyzer){
+    public void addSingleFileAnalyzer(ISingleFileAnalyzer singleFileAnalyzer) {
         this.singleFileAnalyzers.add(singleFileAnalyzer);
     }
-    public void addOriginJarAnalyzer(IOriginJarAnalyzer originJarAnalyzer){
+
+    public void addAnalyzer(IAnalyzer<Void> analyzer) {
+        this.analyzers.add(analyzer);
+    }
+
+    public void addOriginJarAnalyzer(IOriginJarAnalyzer originJarAnalyzer) {
         this.originJarAnalyzers.add(originJarAnalyzer);
     }
-    public void addDirectoryAnalyzer(IDirectoryAnalyzer directoryAnalyzer){
+
+    public void addDirectoryAnalyzer(IDirectoryAnalyzer directoryAnalyzer) {
         this.directoryAnalyzers.add(directoryAnalyzer);
     }
-    public void addJarAnalyzer(IJarAnalyzer jarAnalyzer){
+
+    public void addJarAnalyzer(IJarAnalyzer jarAnalyzer) {
         this.jarAnalyzers.add(jarAnalyzer);
     }
 }

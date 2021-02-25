@@ -1,40 +1,23 @@
-buildscript {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
-    }
-}
-apply plugin:'groovy'
-group 'com.lwjfork.gradle'
-version '1.0-SNAPSHOT'
-
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply from: '../config.gradle'
 repositories {
     mavenLocal()
     mavenCentral()
     google()
     jcenter()
 }
-
 dependencies {
     implementation gradleApi()
     implementation localGroovy()
     implementation rootProject.dependenciesRep.androidGradle
-    implementation rootProject.dependenciesRep.gson
     implementation rootProject.dependenciesRep.groovy
-    implementation rootProject.dependenciesRep.commonsCodec
+
     implementation "${rootProject.publishGroup}:${rootProject.publishArtifactid.androidGradleUtils}:${rootProject.publishVersion.androidGradleUtils}"
 }
 rootProject.ext.PROJ_VERSION = rootProject.publishVersion.androidGradleAdapter
 rootProject.ext.PROJ_ARTIFACTID = rootProject.publishArtifactid.androidGradleAdapter
 rootProject.ext.PROJ_NAME = rootProject.publishArtifactid.androidGradleAdapter
 rootProject.ext.PROJ_PACKAGING = 'jar'
-rootProject.ext.PROJ_DESCRIPTION = 'update snapshots'
-
-
-apply from: '../bintray.gradle'
+rootProject.ext.PROJ_DESCRIPTION = 'update'
+apply from: '../publish.gradle'
