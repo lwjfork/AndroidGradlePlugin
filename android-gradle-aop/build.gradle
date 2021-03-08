@@ -1,0 +1,25 @@
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply from: '../config.gradle'
+repositories {
+    mavenLocal()
+    mavenCentral()
+    google()
+    jcenter()
+}
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation rootProject.dependenciesRep.androidGradle
+    implementation rootProject.dependenciesRep.groovy
+    implementation rootProject.dependenciesRep.javassist
+    implementation "${rootProject.publishGroup}:${rootProject.publishArtifactid.androidGradleUtils}:${rootProject.publishVersion.androidGradleUtils}"
+    implementation "${rootProject.publishGroup}:${rootProject.publishArtifactid.androidGradleAdapter}:${rootProject.publishVersion.androidGradleAdapter}"
+    implementation "${rootProject.publishGroup}:${rootProject.publishArtifactid.commonAOP}:${rootProject.publishVersion.commonAOP}"
+}
+rootProject.ext.PROJ_VERSION = rootProject.publishVersion.androidGradleAop
+rootProject.ext.PROJ_ARTIFACTID = rootProject.publishArtifactid.androidGradleAop
+rootProject.ext.PROJ_NAME = rootProject.publishArtifactid.androidGradleAop
+rootProject.ext.PROJ_PACKAGING = 'jar'
+rootProject.ext.PROJ_DESCRIPTION = 'Android Gradle Plugin Runnable Config'
+apply from: '../publish.gradle'

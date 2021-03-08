@@ -6,5 +6,6 @@ include 'manifest-update'
 include 'runnable-config'
 include 'android-gradle-utils'
 include 'android-gradle-adapter'
+include 'android-gradle-aop'
 include 'common-aop'
 

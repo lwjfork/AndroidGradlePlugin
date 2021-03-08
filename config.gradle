@@ -43,7 +43,8 @@ ext {
             viewInject :'0.0.3',
             manifestUpdate :'0.0.3',
             moduleConfig :'0.0.3',
-            runnableConfig:'0.0.3'
+            runnableConfig:'0.0.3',
+            androidGradleAop:'0.0.1'
     ]
 
 
@@ -56,7 +57,8 @@ ext {
             viewInject :'view-inject',
             manifestUpdate :'manifest-update',
             moduleConfig :'module-config',
-            runnableConfig:'runnable-config'
+            runnableConfig:'runnable-config',
+            androidGradleAop:'android-gradle-aop'
     ]
 
 }
