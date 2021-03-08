@@ -29,7 +29,7 @@ class CommonAopTransform extends BaseApplicationTransform{
         project.tasks.withType(CommonAopAspect.class).forEach{
             it.variantInfoModel = variantInfoModel
             it.appExtension = appExtension
-            isNeedAspect = it.isNeedAspect()
+            isNeedAspect = it.isNeedAspect(context,variantInfoModel)
         }
         if(!isNeedAspect){
           onlyCopy(inputs,outputProvider)

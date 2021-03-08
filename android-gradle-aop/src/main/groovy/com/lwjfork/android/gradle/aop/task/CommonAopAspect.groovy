@@ -1,5 +1,6 @@
 package com.lwjfork.android.gradle.aop.task
 
+import com.android.build.api.transform.Context
 import com.android.build.gradle.AppExtension
 import com.lwjfork.android.gradle.aop.transform.CommonAnalyzer
 import com.lwjfork.gradle.adapter.model.VariantInfoModel
@@ -14,7 +15,7 @@ abstract class CommonAopAspect extends DefaultTask {
 
     abstract void initAnalyzer()
 
-    boolean  isNeedAspect(){
+    boolean  isNeedAspect(Context context, VariantInfoModel variantInfoModel){
         return  true
     }
 }
