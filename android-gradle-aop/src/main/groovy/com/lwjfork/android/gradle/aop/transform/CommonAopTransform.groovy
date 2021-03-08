@@ -26,19 +26,30 @@ class CommonAopTransform extends BaseApplicationTransform{
             outputProvider.deleteAll()
         }
         boolean  isNeedAspect = false
+        // 所有开启了 代码分析植入的 task 集合，key-taskName，value-task
+        HashMap<String,CommonAopAspect> tasks = new HashMap<>()
         project.tasks.withType(CommonAopAspect.class).forEach{
             it.variantInfoModel = variantInfoModel
             it.appExtension = appExtension
-            isNeedAspect = it.isNeedAspect(context,variantInfoModel)
+            it.context = context
+            //  若task开启代码分析，则收集task方便下一步进行代码分析植入
+            def taskAspectAble = it.isNeedAspect()
+            if(taskAspectAble){
+                tasks.put(it.name,it)
+            }
+            isNeedAspect = isNeedAspect || taskAspectAble
         }
+        // 若无需进行代码植入分析，则直接复制即可
         if(!isNeedAspect){
           onlyCopy(inputs,outputProvider)
             return
         }
+        // 代码分析并进行代码植入
         CommonAnalyzer analyzer = new CommonAnalyzer(project, this.appExtension, variantInfoModel, outputProvider)
-        project.tasks.withType(CommonAopAspect.class).forEach{
-            it.analyzer = analyzer
-            it.initAnalyzer()
+        tasks.each {
+            def task = it.value
+            task.analyzer = analyzer
+            task.initAnalyzer()
         }
         inputs.each { TransformInput input ->
             input.directoryInputs.each { DirectoryInput directoryInput ->

@@ -11,11 +11,12 @@ abstract class CommonAopAspect extends DefaultTask {
     VariantInfoModel variantInfoModel
     AppExtension appExtension
     CommonAnalyzer analyzer
+    Context context
 
 
     abstract void initAnalyzer()
 
-    boolean  isNeedAspect(Context context, VariantInfoModel variantInfoModel){
+    boolean  isNeedAspect(){
         return  true
     }
 }
