@@ -32,6 +32,7 @@ class CommonAopTransform extends BaseApplicationTransform{
             it.variantInfoModel = variantInfoModel
             it.appExtension = appExtension
             it.context = context
+            it.appPlugin = this.appPlugin
             //  若task开启代码分析，则收集task方便下一步进行代码分析植入
             def taskAspectAble = it.isNeedAspect()
             if(taskAspectAble){
