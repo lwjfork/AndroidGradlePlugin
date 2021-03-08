@@ -4,7 +4,6 @@ import com.android.build.api.transform.*
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.internal.pipeline.TransformManager
-import com.lwjfork.android.gradle.aop.analyzer.CommonAnalyzer
 import com.lwjfork.android.gradle.aop.task.CommonAopAspect
 import com.lwjfork.aop.utils.FileUtil
 import com.lwjfork.gradle.adapter.model.VariantInfoModel

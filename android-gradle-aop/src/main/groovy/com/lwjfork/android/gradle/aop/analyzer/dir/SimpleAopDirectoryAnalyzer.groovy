@@ -4,14 +4,14 @@ import com.lwjfork.aop.analyzer.exector.IDirectoryAnalyzer
 import com.lwjfork.aop.collector.model.CompileDirModel
 import javassist.ClassPool
 
-abstract class SimpleDirectoryAnalyzer implements IDirectoryAnalyzer{
+abstract class SimpleAopDirectoryAnalyzer implements IDirectoryAnalyzer{
   ClassPool classPool
 
-    ClassPool getClassPool() {
+  final ClassPool getClassPool() {
         return classPool
     }
 
-    void setClassPool(ClassPool classPool) {
+  final  void setClassPool(ClassPool classPool) {
         this.classPool = classPool
     }
 

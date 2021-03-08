@@ -1,17 +1,17 @@
-package com.lwjfork.android.gradle.aop.analyzer
+package com.lwjfork.android.gradle.aop.transform
 
 import com.android.build.api.transform.DirectoryInput
 import com.android.build.api.transform.Format
 import com.android.build.api.transform.JarInput
 import com.android.build.api.transform.TransformOutputProvider
 import com.android.build.gradle.AppExtension
-import com.lwjfork.android.gradle.aop.analyzer.dir.SimpleDirectoryAnalyzer
-import com.lwjfork.android.gradle.aop.analyzer.jar.SimpleJarAnalyzer
+import com.lwjfork.android.gradle.aop.analyzer.SimpleAopAnalyzer
+import com.lwjfork.android.gradle.aop.analyzer.dir.SimpleAopDirectoryAnalyzer
+import com.lwjfork.android.gradle.aop.analyzer.jar.SimpleAopJarAnalyzer
 import com.lwjfork.android.gradle.aop.javassist.ClassPath
 import com.lwjfork.android.gradle.aop.model.DirInputInfo
 import com.lwjfork.android.gradle.aop.model.JarInputInfo
 import com.lwjfork.aop.analyzer.AnalyzerExecutor
-import com.lwjfork.aop.analyzer.exector.IAnalyzer
 import com.lwjfork.aop.collector.ClassCollectorExecutor
 import com.lwjfork.aop.collector.model.CollectorResult
 import com.lwjfork.aop.packetizer.PacketizerExecutor
@@ -33,15 +33,15 @@ class CommonAnalyzer {
     protected String explodedJar
     protected AnalyzerExecutor analyzerExecutor
     protected AppExtension appExtension
-    private ArrayList<IAnalyzer<Void>> analyzers = new ArrayList<>()
+    private ArrayList<SimpleAopAnalyzer> analyzers = new ArrayList<>()
     /**
      * 目录遍历分析器
      */
-    private ArrayList<SimpleDirectoryAnalyzer> directoryAnalyzers = new ArrayList<>()
+    private ArrayList<SimpleAopDirectoryAnalyzer> directoryAnalyzers = new ArrayList<>()
     /**
      * jar 包遍历分析器(解压过得)
      */
-    private ArrayList<SimpleJarAnalyzer> jarAnalyzers = new ArrayList<>()
+    private ArrayList<SimpleAopJarAnalyzer> jarAnalyzers = new ArrayList<>()
 
     CommonAnalyzer(Project project, AppExtension appExtension, VariantInfoModel variantInfoModel, TransformOutputProvider outputProvider) {
         this.project = project
@@ -68,6 +68,7 @@ class CommonAnalyzer {
     protected void initAnalyzerExecutor(CollectorResult collectorResult){
         this.analyzerExecutor = new AnalyzerExecutor(collectorResult)
         analyzers.forEach{
+            it.setClassPool(this.classPool)
             this.analyzerExecutor.addAnalyzer(it)
         }
         this.jarAnalyzers.forEach{
@@ -80,15 +81,15 @@ class CommonAnalyzer {
         }
     }
 
-    def addJarAnalyzer(SimpleJarAnalyzer jarAnalyzer) {
+    def addJarAnalyzer(SimpleAopJarAnalyzer jarAnalyzer) {
         this.jarAnalyzers.add(jarAnalyzer)
     }
 
-    def addDirectoryAnalyzer(SimpleDirectoryAnalyzer directoryAnalyzer) {
+    def addDirectoryAnalyzer(SimpleAopDirectoryAnalyzer directoryAnalyzer) {
         this.directoryAnalyzers.add(directoryAnalyzer)
     }
 
-    def addAnalyzer(IAnalyzer<Void> analyzer) {
+    def addAnalyzer(SimpleAopAnalyzer analyzer) {
         this.analyzers.add(analyzer)
     }
 

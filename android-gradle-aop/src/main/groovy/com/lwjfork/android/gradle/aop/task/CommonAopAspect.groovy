@@ -1,7 +1,7 @@
 package com.lwjfork.android.gradle.aop.task
 
 import com.android.build.gradle.AppExtension
-import com.lwjfork.android.gradle.aop.analyzer.CommonAnalyzer
+import com.lwjfork.android.gradle.aop.transform.CommonAnalyzer
 import com.lwjfork.gradle.adapter.model.VariantInfoModel
 import org.gradle.api.DefaultTask
 
