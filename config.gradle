@@ -44,7 +44,7 @@ ext {
             manifestUpdate :'0.0.3',
             moduleConfig :'0.0.3',
             runnableConfig:'0.0.3',
-            androidGradleAop:'0.0.7'
+            androidGradleAop:'0.0.8'
     ]
 
 

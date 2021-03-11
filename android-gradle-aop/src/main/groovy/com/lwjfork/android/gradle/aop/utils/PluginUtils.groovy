@@ -10,8 +10,30 @@ class PluginUtils {
      * @return
      */
     static boolean isClassFile(String path) {
-        return path.endsWith(".class")
+        return path.endsWith(".class") && !path.endsWith("module-info.class")
     }
+
+    /**
+     * 根据绝对路径，同时读取 magic 值 判断是否是字节码文件
+     * @param absolutePath
+     * @return
+     */
+    static boolean isClassFileByAbsolutePath(String absolutePath) {
+        File file = new File(absolutePath)
+        FileInputStream fi = new FileInputStream(file)
+        byte[] magicBytes = new byte[4]
+        int num = 0;
+        if(fi.read(magicBytes)>0){
+            for (int i= 0; i < magicBytes.length; i++) {
+                num <<= 8
+                num |= (magicBytes[i] & 0xff)
+            }
+        }
+        return  "cafebabe".equals(Integer.toHexString(num))
+    }
+
+
+
 
     /**
      * 通过相对路径获取类名
@@ -21,7 +43,6 @@ class PluginUtils {
     static String getClassNameByPath(String path) {
         return path.replace('\\', '.').replace('/', '.').replace('.class', '')
     }
-
 
 
     static def printJsonFile(Object object, String path, String fileName) {
