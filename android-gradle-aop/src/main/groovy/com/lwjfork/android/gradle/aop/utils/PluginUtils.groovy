@@ -19,6 +19,9 @@ class PluginUtils {
      * @return
      */
     static boolean isClassFileByAbsolutePath(String absolutePath) {
+        if(!isClassFile(absolutePath)){
+            return false
+        }
         File file = new File(absolutePath)
         FileInputStream fi = new FileInputStream(file)
         byte[] magicBytes = new byte[4]
@@ -29,6 +32,7 @@ class PluginUtils {
                 num |= (magicBytes[i] & 0xff)
             }
         }
+        fi.close()
         return  "cafebabe".equals(Integer.toHexString(num))
     }
 

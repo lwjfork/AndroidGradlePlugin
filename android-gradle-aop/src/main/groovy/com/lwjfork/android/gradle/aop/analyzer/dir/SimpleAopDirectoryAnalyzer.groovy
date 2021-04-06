@@ -1,10 +1,11 @@
 package com.lwjfork.android.gradle.aop.analyzer.dir
 
+import com.lwjfork.android.gradle.aop.analyzer.common.ICommonAnalyzer
 import com.lwjfork.aop.analyzer.exector.IDirectoryAnalyzer
 import com.lwjfork.aop.collector.model.CompileDirModel
 import javassist.ClassPool
 
-abstract class SimpleAopDirectoryAnalyzer implements IDirectoryAnalyzer{
+abstract class SimpleAopDirectoryAnalyzer extends ICommonAnalyzer implements IDirectoryAnalyzer{
   ClassPool classPool
 
   final ClassPool getClassPool() {

@@ -1,10 +1,11 @@
 package com.lwjfork.android.gradle.aop.analyzer.jar
 
+import com.lwjfork.android.gradle.aop.analyzer.common.ICommonAnalyzer
 import com.lwjfork.aop.analyzer.exector.IJarAnalyzer
 import com.lwjfork.aop.collector.model.CompileJarModel
 import javassist.ClassPool
 
-abstract class SimpleAopJarAnalyzer implements IJarAnalyzer{
+abstract class SimpleAopJarAnalyzer extends ICommonAnalyzer implements IJarAnalyzer{
   ClassPool classPool
 
   final   ClassPool getClassPool() {
