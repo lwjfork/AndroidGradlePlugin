@@ -1,0 +1,46 @@
+apply plugin: 'groovy'
+apply plugin: 'java'
+
+
+apply from: '../config.gradle'
+
+group 'com.lwjfork.gradle'
+version '1.0'
+repositories {
+    mavenLocal()
+    mavenCentral()
+    google()
+    jcenter()
+}
+
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation rootProject.dependenciesRep.androidGradle
+    implementation rootProject.dependenciesRep.groovy
+    compile "${rootProject.publishGroup}:${rootProject.publishArtifactid.androidGradleAdapter}:${rootProject.publishVersion.androidGradleAdapter}"
+    compile "${rootProject.publishGroup}:${rootProject.publishArtifactid.androidGradleUtils}:${rootProject.publishVersion.androidGradleUtils}"
+    compile "${rootProject.publishGroup}:${rootProject.publishArtifactid.commonAOP}:${rootProject.publishVersion.commonAOP}"
+    compile "${rootProject.publishGroup}:${rootProject.publishArtifactid.dependencyConfig}:${rootProject.publishVersion.dependencyConfig}"
+    compile "${rootProject.publishGroup}:${rootProject.publishArtifactid.viewInject}:${rootProject.publishVersion.viewInject}"
+    compile "${rootProject.publishGroup}:${rootProject.publishArtifactid.manifestUpdate}:${rootProject.publishVersion.manifestUpdate}"
+    compile "${rootProject.publishGroup}:${rootProject.publishArtifactid.moduleConfig}:${rootProject.publishVersion.moduleConfig}"
+    compile "${rootProject.publishGroup}:${rootProject.publishArtifactid.runnableConfig}:${rootProject.publishVersion.runnableConfig}"
+}
+
+apply from: "https://raw.githubusercontent.com/lwjfork/scriptlib/master/gradle/publish/maven/jar/publish-no-kotlin-shadow.gradle"
+shadowJar {
+    dependencies {
+        include(dependency("${rootProject.publishGroup}:${rootProject.publishArtifactid.androidGradleAdapter}:${rootProject.publishVersion.androidGradleAdapter}"))
+        include(dependency("${rootProject.publishGroup}:${rootProject.publishArtifactid.androidGradleUtils}:${rootProject.publishVersion.androidGradleUtils}"))
+        include(dependency("${rootProject.publishGroup}:${rootProject.publishArtifactid.commonAOP}:${rootProject.publishVersion.commonAOP}"))
+        include(dependency("${rootProject.publishGroup}:${rootProject.publishArtifactid.dependencyConfig}:${rootProject.publishVersion.dependencyConfig}"))
+        include(dependency("${rootProject.publishGroup}:${rootProject.publishArtifactid.viewInject}:${rootProject.publishVersion.viewInject}"))
+        include(dependency("${rootProject.publishGroup}:${rootProject.publishArtifactid.manifestUpdate}:${rootProject.publishVersion.manifestUpdate}"))
+        include(dependency("${rootProject.publishGroup}:${rootProject.publishArtifactid.moduleConfig}:${rootProject.publishVersion.moduleConfig}"))
+        include(dependency("${rootProject.publishGroup}:${rootProject.publishArtifactid.runnableConfig}:${rootProject.publishVersion.runnableConfig}"))
+    }
+    configurations = [project.configurations.compile]
+
+}

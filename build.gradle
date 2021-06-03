@@ -8,7 +8,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5"
+        classpath 'io.github.gradle-nexus:publish-plugin:1.1.0'
         classpath "com.github.jengelman.gradle.plugins:shadow:5.2.0"
     }
 }
@@ -18,70 +18,18 @@ repositories {
     google()
     jcenter()
 }
-apply plugin: 'groovy'
 apply plugin: 'java'
 
 group 'com.lwjfork.gradle'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 
 apply from: 'config.gradle'
-apply plugin: 'com.github.johnrengelman.shadow'
-shadowJar {
-    dependencies {
-        include(dependency("${rootProject.publishGroup}:${rootProject.publishArtifactid.androidGradleAdapter}:${rootProject.publishVersion.androidGradleAdapter}"))
-        include(dependency("${rootProject.publishGroup}:${rootProject.publishArtifactid.androidGradleUtils}:${rootProject.publishVersion.androidGradleUtils}"))
-        include(dependency("${rootProject.publishGroup}:${rootProject.publishArtifactid.commonAOP}:${rootProject.publishVersion.commonAOP}"))
-        include(dependency("${rootProject.publishGroup}:${rootProject.publishArtifactid.dependencyConfig}:${rootProject.publishVersion.dependencyConfig}"))
-        include(dependency("${rootProject.publishGroup}:${rootProject.publishArtifactid.viewInject}:${rootProject.publishVersion.viewInject}"))
-        include(dependency("${rootProject.publishGroup}:${rootProject.publishArtifactid.manifestUpdate}:${rootProject.publishVersion.manifestUpdate}"))
-        include(dependency("${rootProject.publishGroup}:${rootProject.publishArtifactid.moduleConfig}:${rootProject.publishVersion.moduleConfig}"))
-        include(dependency("${rootProject.publishGroup}:${rootProject.publishArtifactid.runnableConfig}:${rootProject.publishVersion.runnableConfig}"))
-    }
-    configurations = [project.configurations.compile]
-}
+
 dependencies {
-    implementation gradleApi()
-    implementation localGroovy()
-    implementation rootProject.dependenciesRep.androidGradle
-    implementation rootProject.dependenciesRep.groovy
-    compile "${rootProject.publishGroup}:${rootProject.publishArtifactid.androidGradleAdapter}:${rootProject.publishVersion.androidGradleAdapter}"
-    compile "${rootProject.publishGroup}:${rootProject.publishArtifactid.androidGradleUtils}:${rootProject.publishVersion.androidGradleUtils}"
-    compile "${rootProject.publishGroup}:${rootProject.publishArtifactid.commonAOP}:${rootProject.publishVersion.commonAOP}"
-    compile "${rootProject.publishGroup}:${rootProject.publishArtifactid.dependencyConfig}:${rootProject.publishVersion.dependencyConfig}"
-    compile "${rootProject.publishGroup}:${rootProject.publishArtifactid.viewInject}:${rootProject.publishVersion.viewInject}"
-    compile "${rootProject.publishGroup}:${rootProject.publishArtifactid.manifestUpdate}:${rootProject.publishVersion.manifestUpdate}"
-    compile "${rootProject.publishGroup}:${rootProject.publishArtifactid.moduleConfig}:${rootProject.publishVersion.moduleConfig}"
-    compile "${rootProject.publishGroup}:${rootProject.publishArtifactid.runnableConfig}:${rootProject.publishVersion.runnableConfig}"
+
 }
 
-//#这里改成开发者id，比如
-rootProject.ext.DEVELOPER_ID = 'lwjfork'
-//#这里改成开发者名字，比如android
-rootProject.ext.DEVELOPER_NAME = 'lwjfork'
-//#这里改成开发者邮箱，比如[email]someone@android.com[/email]
-rootProject.ext.DEVELOPER_EMAIL = 'lwjfork@gmail.com'
-//#  这里改成groupId，比如com.android.support
-rootProject.ext.PROJ_GROUP = 'com.lwjfork.gradle'
-//#这里改成github地址，比如https://github.com/android/appcompat
-rootProject.ext.PROJ_WEBSITEURL = 'https://github.com/lwjfork/AndroidGradlePlugin'
-//          #这里改成issue地址，比如https://github.com/android/appcompat/issues
-rootProject.ext.PROJ_ISSUEURL = 'https://github.com/lwjfork/AndroidGradlePlugin/issues'
-//        #这里改成版本控制地主，比如https://github.com/android/appcompat.git
-rootProject.ext.PROJ_VCSURL = 'https://github.com/lwjfork/AndroidGradlePlugin.git'
-// 中央仓库名称
-rootProject.ext.PROJ_REPO = "maven"
-//  # 用户名
-rootProject.ext.BINTRAY_USER = System.getenv("BINTRAY_USER") //
-//# key
-rootProject.ext.BINTRAY_APIKEY = System.getenv("BINTRAY_APIKEY")
 
-
-rootProject.ext.PROJ_VERSION = "1.0.0"
-//rootProject.ext.PROJ_VERSION = "0.0.2"
-rootProject.ext.PROJ_ARTIFACTID = "test-plugin"
-rootProject.ext.PROJ_NAME = "test-plugin"
-rootProject.ext.PROJ_PACKAGING = 'jar'
-rootProject.ext.PROJ_DESCRIPTION = 'Android Gradle Plugin Test'
-apply from: "publish.gradle"
+apply from: "https://raw.githubusercontent.com/lwjfork/scriptlib/master/gradle/publish/maven/publish-root.gradle"
 

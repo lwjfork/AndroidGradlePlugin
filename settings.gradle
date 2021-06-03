@@ -1,11 +1,13 @@
 rootProject.name = 'AndroidGradlePlugin'
+
+include 'android-gradle-utils'
+include 'common-aop'
+include 'android-gradle-adapter'
+include 'android-gradle-aop'
 include 'dependency-config'
 include 'module-config'
 include 'view-inject'
 include 'manifest-update'
 include 'runnable-config'
-include 'android-gradle-utils'
-include 'android-gradle-adapter'
-include 'android-gradle-aop'
-include 'common-aop'
+include 'plugin-test'
 

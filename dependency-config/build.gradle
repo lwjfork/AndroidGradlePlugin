@@ -14,15 +14,8 @@ dependencies {
     implementation rootProject.dependenciesRep.androidGradle
     implementation rootProject.dependenciesRep.groovy
 
-    implementation "${rootProject.publishGroup}:${rootProject.publishArtifactid.androidGradleUtils}:${rootProject.publishVersion.androidGradleUtils}"
-    implementation "${rootProject.publishGroup}:${rootProject.publishArtifactid.androidGradleAdapter}:${rootProject.publishVersion.androidGradleAdapter}"
+    implementation "io.github.lwjfork:android-gradle-utils:1.0.0"
+    implementation "io.github.lwjfork:android-gradle-adapter:1.0.0"
 }
 
-rootProject.ext.PROJ_VERSION = rootProject.publishVersion.dependencyConfig
-rootProject.ext.PROJ_SNAPSHOT_VERSION = rootProject.ext.PROJ_VERSION + '-SNAPSHOT'
-rootProject.ext.PROJ_ARTIFACTID = rootProject.publishArtifactid.dependencyConfig
-rootProject.ext.PROJ_NAME = rootProject.publishArtifactid.dependencyConfig
-rootProject.ext.PROJ_PACKAGING = 'jar'
-rootProject.ext.PROJ_DESCRIPTION = 'Android Gradle Plugin dependency-config'
-
-apply from: "../publish.gradle"
+apply from: "https://raw.githubusercontent.com/lwjfork/scriptlib/master/gradle/publish/maven/jar/publish-no-kotlin.gradle"
